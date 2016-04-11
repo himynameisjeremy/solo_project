@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
 
 var path = require('path');
 
-var encryptLib = require('../modules/encryption');
 var connection = require('../modules/connection');
 var pg = require('pg');
 
@@ -22,7 +20,7 @@ router.post('/', function(req, res, next) {
   console.log('new dare:', createDare);
 
   pg.connect(connection, function(err, client, done) {
-    client.query("INSERT INTO users (title, description, pledge) VALUES ($1, $2, $3) RETURNING id",
+    client.query("INSERT INTO dares (title, description, pledge) VALUES ($1, $2, $3) RETURNING id",
       [createDare.title, createDare.description, createDare.pledge],
         function (err, result) {
           client.end();
